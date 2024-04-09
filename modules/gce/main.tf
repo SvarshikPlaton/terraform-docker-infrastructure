@@ -30,18 +30,6 @@ resource "google_compute_instance" "frontend" {
   metadata = {
     ssh-keys = "provedcode:${file("keys/id_rsa.pub")}"
   }
-
-  provisioner "file" {
-    source      = "scripts/Dockerfile"
-    destination = "/home/provedcode/Dockerfile"
-
-    connection {
-      type        = "ssh"
-      user        = "provedcode"
-      private_key = file("keys/id_rsa")
-      host        = self.network_interface[0].access_config[0].nat_ip
-    }
-  }
 }
 
 // Backend instance
